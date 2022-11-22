@@ -37,6 +37,7 @@ about:
   doc_url: https://github.com/pdm-project/pdm-pep517/blob/master/README.md
   summary: A PEP 517 backend for PDM that supports PEP 621 metadata
   license: MIT
+  license_family: MIT
   license_file: LICENSE
 
 extra:
