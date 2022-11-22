@@ -36,6 +36,10 @@ about:
   dev_url: https://github.com/pdm-project/pdm-pep517
   doc_url: https://github.com/pdm-project/pdm-pep517/blob/master/README.md
   summary: A PEP 517 backend for PDM that supports PEP 621 metadata
+  description: |
+    This is the backend for PDM projects, but you can also
+    use it alone. It reads the metadata of PEP 621 format and
+    converts it to Core metadata.
   license: MIT
   license_family: MIT
   license_file: LICENSE
