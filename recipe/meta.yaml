@@ -34,6 +34,7 @@ test:
 about:
   home: https://pypi.org/project/pdm-pep517/
   dev_url: https://github.com/pdm-project/pdm-pep517
+  doc_url: https://github.com/pdm-project/pdm-pep517/blob/master/README.md
   summary: A PEP 517 backend for PDM that supports PEP 621 metadata
   license: MIT
   license_file: LICENSE
