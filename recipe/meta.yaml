@@ -1,5 +1,5 @@
 {% set name = "pdm-pep517" %}
-{% set version = "1.0.6" %}
+{% set version = "1.1.4" %}
 
 
 package:
@@ -7,13 +7,13 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pdm-pep517-{{ version }}.tar.gz
-  sha256: a4407703d50fa4d671383a354868b05a13060c1bf38264cbb5ddc9a73e4a1dc5
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 7f49121e70b42dca296fac962210dd2da07a39575fc5673137ad661633b2cf3f
 
 build:
   number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<37]
-  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
@@ -22,17 +22,34 @@ requirements:
     - wheel
   run:
     - python
+    # https://github.com/pdm-project/pdm-backend/blob/1.1.4/pdm/pep517/api.py#L27
+    - setuptools >=40.8.0
 
 test:
+  source_files:
+    - tests
   imports:
     - pdm.pep517
+    - pdm.pep517.base
+    - pdm.pep517.editable
+    - pdm.pep517.exceptions
+    - pdm.pep517.macosx_platform
+    - pdm.pep517.metadata
+    - pdm.pep517.scm
+    - pdm.pep517.sdist
+    - pdm.pep517.utils
+    - pdm.pep517.validator
+    - pdm.pep517.version
+    - pdm.pep517.wheel
   commands:
     - pip check
+    - pytest -v tests
   requires:
     - pip
+    - pytest
 
 about:
-  home: https://pypi.org/project/pdm-pep517/
+  home: https://pypi.org/project/pdm-pep517
   dev_url: https://github.com/pdm-project/pdm-pep517
   doc_url: https://github.com/pdm-project/pdm-pep517/blob/master/README.md
   summary: A PEP 517 backend for PDM that supports PEP 621 metadata
@@ -47,3 +64,5 @@ about:
 extra:
   recipe-maintainers:
     - hadim
+  skip-lints:
+    - python_build_tool_in_run
