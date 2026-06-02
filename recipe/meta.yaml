@@ -11,7 +11,7 @@ source:
   sha256: 7f49121e70b42dca296fac962210dd2da07a39575fc5673137ad661633b2cf3f
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<37]
 
@@ -29,8 +29,8 @@ requirements:
 #     ), f"would build wheel with unsupported tag {tag}"
 # E   AssertionError: would build wheel with unsupported tag ('cp313', 'cp313_win_amd64', 'win_amd64')
 {% set deselect_tests = "" %}
-{% set deselect_tests = " --deselect=tests/test_api.py::test_build_with_cextension" %}  # [win and py==313]
-{% set deselect_tests = deselect_tests + " --deselect=tests/test_api.py::test_build_with_cextension_in_src" %}  # [win and py==313]
+{% set deselect_tests = " --deselect=tests/test_api.py::test_build_with_cextension" %}  # [win and py>=313]
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_api.py::test_build_with_cextension_in_src" %}  # [win and py>=313]
 
 test:
   source_files:
@@ -50,10 +50,12 @@ test:
     - pdm.pep517.wheel
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - pytest -v tests {{ deselect_tests }}
   requires:
     - pip
     - pytest
+    - git # used by tests
 
 about:
   home: https://pypi.org/project/pdm-pep517
