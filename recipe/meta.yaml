@@ -55,6 +55,7 @@ test:
   requires:
     - pip
     - pytest
+    - git # used by tests
 
 about:
   home: https://pypi.org/project/pdm-pep517
